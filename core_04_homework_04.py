@@ -58,7 +58,7 @@ def change_contact(args: list[str], contacts: dict[str: str]) -> str:
         return f"{Fore.RED}\nInvalid data"
 
 # Function to show contact
-def show_phone(args, contacts):
+def show_phone(args: list[str], contacts: dict[str: str]) -> str:
     """
     Shows phone number of a contact
 
@@ -76,6 +76,24 @@ def show_phone(args, contacts):
         return f"{Fore.RED}\nContact doesn't exist"
     except IndexError:
         return f"{Fore.RED}\nInvalid data"
+
+# Function to show all contacts
+def show_all_contacts(contacts: dict[str: str]) -> str:
+    """
+    Shows all contacts
+
+    Parameters:
+        contacts (dict[str]): existing contacts
+    
+    Returns:
+        str: formatted string with information/notification
+    """
+    if len(contacts) == 0:
+        return Fore.GREEN + "\nThere are no contacts yet"
+    all_contacts = ""
+    for name, phone in contacts.items():
+        all_contacts += f"\n{Fore.GREEN}{name}: {phone}"
+    return all_contacts
 
 # Main function
 def main():
@@ -134,12 +152,7 @@ def main():
             print(show_phone(args, contacts))
         # 'All' command
         elif command == "all":
-            if len(contacts) == 0:
-                print(Fore.GREEN + "\nThere are no contacts yet")
-            else:
-                print()
-                for name, phone in contacts.items():
-                    print(f"{Fore.GREEN}{name}: {phone}")
+            print(show_all_contacts(contacts))
         # Command absent from command list
         else:
             print(Fore.RED + "\nInvalid command")
